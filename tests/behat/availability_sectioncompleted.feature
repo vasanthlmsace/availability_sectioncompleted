@@ -29,7 +29,7 @@ Feature: availability_sectioncompleted
       | Name                | Page 1 |
       | Description         | Test   |
       | Page content        | Test   |
-      | Completion tracking | 1      |
+      | completion          | 1      |
 
     # And another one that depends on it (hidden otherwise).
     And I add a "Page" to section "2"

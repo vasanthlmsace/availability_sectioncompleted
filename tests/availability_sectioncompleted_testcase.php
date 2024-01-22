@@ -23,6 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace availability_sectioncompleted;
 use availability_sectioncompleted\condition;
 
 /**
@@ -32,12 +33,12 @@ use availability_sectioncompleted\condition;
  * @copyright  2021 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class availability_sectioncompleted_testcase extends advanced_testcase {
+class availability_sectioncompleted_testcase extends \advanced_testcase {
 
     /**
      * Load required classes.
      */
-    public function setUp():void {
+    public function setup():void {
         // Load the mock info class so that it can be used.
         global $CFG;
         require_once($CFG->dirroot . '/availability/tests/fixtures/mock_info.php');
@@ -47,7 +48,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests constructing and using sectioncompleted condition as part of tree.
-     * @coversDefaultClass availability_sectioncompleted\condition
+     * @covers ::availability_sectioncompleted\condition
      */
     public function test_in_tree() {
         global $USER;
@@ -93,7 +94,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests the constructor including error conditions.
-     * @coversDefaultClass availability_sectioncompleted\condition
+     * @covers ::availability_sectioncompleted\condition
      */
     public function test_constructor() {
         // This works with no parameters.
@@ -129,7 +130,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests the save() function.
-     * @coversDefaultClass availability_sectioncompleted\condition
+     * @covers ::availability_sectioncompleted\condition
      */
     public function test_save() {
         $structure = (object)['id' => 1];
@@ -140,7 +141,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests the get_description and get_standalone_description functions.
-     * @coversDefaultClass availability_sectioncompleted\frontend
+     * @covers ::availability_sectioncompleted\frontend
      */
     public function test_get_description() {
         $this->resetAfterTest();
@@ -181,7 +182,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests a page before and after completion.
-     * @covers availability_sectioncompleted\condition
+     * @covers ::availability_sectioncompleted\condition
      */
     public function test_page() {
         global $PAGE;
@@ -224,7 +225,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
     /**
      * Tests using course completion condition in front end.
-     * @covers availability_sectioncompleted\condition
+     * @covers ::availability_sectioncompleted\condition
      */
     public function test_other() {
         $condition = \availability_sectioncompleted\condition::get_json('3');

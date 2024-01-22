@@ -23,6 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace availability_sectioncompleted;
 use core_privacy\tests\provider_testcase;
 
 /**
@@ -36,7 +37,7 @@ class availability_sectioncompleted_privacy_testcase extends provider_testcase {
 
     /**
      * Test returning metadata.
-     * @coversDefaultClass availability_sectioncompleted\privacy\provider
+     * @covers ::availability_sectioncompleted\privacy\provider
      */
     public function test_get_metadata() {
         $collection = new \core_privacy\local\metadata\collection('availability_sectioncompleted');
