@@ -65,7 +65,7 @@ class condition extends \core_availability\condition {
      * @return object|\stdClass $result
      */
     public function save() {
-        $result = (object)array('type' => 'sectioncompleted');
+        $result = (object)['type' => 'sectioncompleted'];
         if ($this->sectionid) {
             $result->id = $this->sectionid;
         } else {
@@ -162,7 +162,7 @@ class condition extends \core_availability\condition {
         }
         global $DB;
         $format = course_get_format($info->get_course()->id);
-        $section = $DB->get_record('course_sections', array('id' => $this->sectionid));
+        $section = $DB->get_record('course_sections', ['id' => $this->sectionid]);
         $title = @$format->get_section_name($section->section);
         if ($not) {
             return get_string('getdescriptionnot', 'availability_sectioncompleted', $title);
@@ -172,11 +172,11 @@ class condition extends \core_availability\condition {
 
 
     /**
-      * Checks whether this condition applies to user lists.
-      *
-      * @return bool
-      * @throws \coding_exception
-      */
+     * Checks whether this condition applies to user lists.
+     *
+     * @return bool
+     * @throws \coding_exception
+     */
     public function is_applied_to_user_lists() {
         // Group conditions are assumed to be 'permanent', so they affect the
         // display of user lists for activities.

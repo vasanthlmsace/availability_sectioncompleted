@@ -24,8 +24,6 @@
 
 namespace availability_sectioncompleted;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Availability role - Frontend form class
  *
@@ -45,30 +43,28 @@ class frontend extends \core_availability\frontend {
      * @return array
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
-         $jsarray = array();
+        $jsarray = [];
         $context = \context_course::instance($course->id);
 
         $format = course_get_format($course->id);
         $course = $format->get_course(); // Needed to have numsections property available.
         if (!$format->uses_sections()) {
-            return array();
+            return [];
         }
         if (($format instanceof format_digidagotabs) || ($format instanceof format_horizontaltabs)) {
             // Don't show the menu in a tab.
-                return array();
+                return [];
             // Only show the block inside activities of courses.
         } else {
             $coursesections = $format->get_sections();
         }
         if (empty($coursesections)) {
-            return array();
+            return [];
         }
-
-
         if ($section != null) {
             if (isset($coursesections[$section->section - 1])) {
                 $presection = $coursesections[$section->section - 1];
-                $jsarray [] = (object) [
+                $jsarray[] = (object) [
                     'id' => $presection->id,
                     'name' => get_string('previoussection'),
                 ];
@@ -79,7 +75,7 @@ class frontend extends \core_availability\frontend {
             $cmsection = $cm->get_section_info();
             if (isset($coursesections[$cmsection->section - 1])) {
                 $presection = $coursesections[$cmsection->section - 1];
-                $jsarray [] = (object) [
+                $jsarray[] = (object) [
                     'id' => $presection->id,
                     'name' => get_string('previoussection'),
                 ];
@@ -106,13 +102,12 @@ class frontend extends \core_availability\frontend {
                 $title = $format->get_section_name($section);
             }
 
-            $jsarray[] = (object)array(
+            $jsarray[] = (object) [
                 'id' => $section->id,
-                'name' => $title
-            );
+                'name' => $title,
+            ];
         }
-
-        return array($jsarray);
+        return [$jsarray];
     }
 
 

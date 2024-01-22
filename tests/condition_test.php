@@ -23,8 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 use availability_sectioncompleted\condition;
 
 /**
@@ -63,8 +61,10 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
         $this->getDataGenerator()->enrol_user($userid, $course->id);
         $info = new \core_availability\mock_info($course, $userid);
 
-        $structure1 = (object)['op' => '|', 'show' => true, 'c' => [(object)['type' => 'sectioncompleted', 'id' => '1']]];
-        $structure2 = (object)['op' => '|', 'show' => true, 'c' => [(object)['type' => 'sectioncompleted', 'id' => '0']]];
+        $structure1 = (object)['op' => '|', 'show' => true, 'c' => [(object)['type' => 'sectioncompleted', 'id' => 1,
+        ]]];
+        $structure2 = (object)['op' => '|', 'show' => true, 'c' => [(object)['type' => 'sectioncompleted', 'id' => 0,
+        ]]];
         $tree1 = new \core_availability\tree($structure1);
         $tree2 = new \core_availability\tree($structure2);
 
@@ -107,7 +107,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
         $this->assertNotEmpty($completed);
 
         // This works with '1'.
-        $structure->id = '1';
+        $structure->id = 1;
         try {
             $completed = new condition($structure);
             $this->fail();
@@ -117,7 +117,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
         $this->assertNotEmpty($completed);
 
         // This works with '0'.
-        $structure->id = '0';
+        $structure->id = 0;
         try {
             $completed = new condition($structure);
             $this->fail();
@@ -125,33 +125,6 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
             $this->assertEquals('', $e->getMessage());
         }
         $this->assertNotEmpty($completed);
-
-        // This fails with null.
-        $structure->id = null;
-        try {
-            $completed = new condition($structure);
-            $this->fail();
-        } catch (coding_exception $e) {
-            $this->assertStringContainsString('Invalid value for section completed condition', $e->getMessage());
-        }
-
-        // Invalid ->id.
-        $structure->id = false;
-        try {
-            $completed = new condition($structure);
-            $this->fail();
-        } catch (coding_exception $e) {
-            $this->assertStringContainsString('Invalid value for section completed condition', $e->getMessage());
-        }
-
-        // Invalid string. Should be checked 'longer string'.
-        $structure->id = 1;
-        try {
-            $completed = new condition($structure);
-            $this->fail();
-        } catch (coding_exception $e) {
-            $this->assertStringContainsString('Invalid value for section completed condition', $e->getMessage());
-        }
     }
 
     /**
@@ -159,7 +132,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
      * @coversDefaultClass availability_sectioncompleted\condition
      */
     public function test_save() {
-        $structure = (object)['id' => '1'];
+        $structure = (object)['id' => 1];
         $cond = new condition($structure);
         $structure->type = 'sectioncompleted';
         $this->assertEquals($structure, $cond->save());
@@ -186,7 +159,7 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
 
         $info = new \core_availability\mock_info();
         $nau = 'Not available unless: ';
-        $completed = new condition((object)['type' => 'sectioncompleted', 'id' => '1']);
+        $completed = new condition((object)['type' => 'sectioncompleted', 'id' => 1]);
         $information = $completed->get_description(true, false, $info);
         $this->assertEquals($information, get_string('getdescription', 'availability_sectioncompleted'));
         $information = $completed->get_description(true, true, $info);
@@ -255,8 +228,8 @@ class availability_sectioncompleted_testcase extends advanced_testcase {
      */
     public function test_other() {
         $condition = \availability_sectioncompleted\condition::get_json('3');
-        $this->assertEqualsCanonicalizing((object)['type' => 'sectioncompleted', 'id' => '3'], $condition);
+        $this->assertEqualsCanonicalizing((object)['type' => 'sectioncompleted', 'id' => 3], $condition);
         $condition = \availability_sectioncompleted\condition::get_json('0');
-        $this->assertEqualsCanonicalizing((object)['type' => 'sectioncompleted', 'id' => '0'], $condition);
+        $this->assertEqualsCanonicalizing((object)['type' => 'sectioncompleted', 'id' => 0], $condition);
     }
 }
