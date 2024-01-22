@@ -30,7 +30,7 @@ Feature: availability_sectioncompleted
       | Description         | Test   |
       | Page content        | Test   |
       | completion          | 1      |
-
+    And I press "Save and return to course"
     # And another one that depends on it (hidden otherwise).
     And I add a "Page" to section "2"
     And I set the following fields to these values:
