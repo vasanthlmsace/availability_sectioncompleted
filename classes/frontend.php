@@ -43,6 +43,7 @@ class frontend extends \core_availability\frontend {
      * @return array
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
+        global $PAGE;
         $jsarray = [];
         $context = \context_course::instance($course->id);
 
@@ -69,12 +70,18 @@ class frontend extends \core_availability\frontend {
                     'name' => get_string('previoussection'),
                 ];
             }
-        }
-
-        if ($cm != null) {
+        } else if ($cm != null) {
             $cmsection = $cm->get_section_info();
             if (isset($coursesections[$cmsection->section - 1])) {
                 $presection = $coursesections[$cmsection->section - 1];
+                $jsarray[] = (object) [
+                    'id' => $presection->id,
+                    'name' => get_string('previoussection'),
+                ];
+            }
+        }  else if ($sectionnum = optional_param('section', 0, PARAM_INT)) {
+            if (isset($coursesections[$sectionnum - 1])) {
+                $presection = $coursesections[$sectionnum - 1];
                 $jsarray[] = (object) [
                     'id' => $presection->id,
                     'name' => get_string('previoussection'),
