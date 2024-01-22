@@ -63,10 +63,35 @@ class frontend extends \core_availability\frontend {
         if (empty($coursesections)) {
             return array();
         }
+
+
+        if ($section != null) {
+            if (isset($coursesections[$section->section - 1])) {
+                $presection = $coursesections[$section->section - 1];
+                $jsarray [] = (object) [
+                    'id' => $presection->id,
+                    'name' => get_string('previoussection'),
+                ];
+            }
+        }
+
+        if ($cm != null) {
+            $cmsection = $cm->get_section_info();
+            if (isset($coursesections[$cmsection->section - 1])) {
+                $presection = $coursesections[$cmsection->section - 1];
+                $jsarray [] = (object) [
+                    'id' => $presection->id,
+                    'name' => get_string('previoussection'),
+                ];
+            }
+        }
+
         foreach ($coursesections as $section) {
+
             if (@$cm->section == $section->id) {
                 continue;
             }
+
             if (!$section->uservisible) {
                 continue;
             }
@@ -80,11 +105,13 @@ class frontend extends \core_availability\frontend {
             } else {
                 $title = $format->get_section_name($section);
             }
+
             $jsarray[] = (object)array(
                 'id' => $section->id,
                 'name' => $title
             );
         }
+
         return array($jsarray);
     }
 
