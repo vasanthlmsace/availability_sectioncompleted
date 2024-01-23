@@ -69,7 +69,7 @@ Feature: availability_sectioncompleted
 
   @javascript
   Scenario: Section completion for previous section to an section
-   Given I log in as "teacher1"
+    Given I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     When I edit the section "2"
     And I expand all fieldsets
